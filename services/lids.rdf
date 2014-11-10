@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF 
+  xmlns:lids="http://openlids.org/vocab#" 
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+  
+  <rdf:Description rdf:about="">
+    <rdfs:label>GADM Linked Data Service Description</rdfs:label>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#withinRegion">
+    <lids:lids_description>
+      <rdf:Description>
+        <lids:endpoint rdf:resource="http://gadm.geovocab.org/services/withinRegion" />
+	<lids:service_entity>point</lids:service_entity>
+	<lids:input_bgp>?point &lt;http://www.w3.org/2003/01/geo/wgs84_pos#lat&gt; ?lat . ?point &lt;http://www.w3.org/2003/01/geo/wgs84_pos#long&gt; ?long . ?point &lt;http://geovocab.org/spatial#PP&gt; ?region</lids:input_bgp>
+	<lids:output_bgp>?point &lt;http://www.w3.org/2003/01/geo/wgs84_pos#lat&gt; ?lat . ?point &lt;http://www.w3.org/2003/01/geo/wgs84_pos#long&gt; ?long . ?point &lt;http://geovocab.org/spatial#PP&gt; ?region</lids:output_bgp>
+	<lids:required_vars>lat,long</lids:required_vars>
+      </rdf:Description>
+    </lids:lids_description>
+    <lids:description>
+PREFIX geo: &lt;http://www.w3.org/2003/01/geo/wgs84_pos#&gt;
+PREFIX spatial: &lt;http://geovocab.org/spatial#&gt;
+
+CONSTRUCT {
+   ?point geo:lat ?lat .
+   ?point geo:long ?long .
+   ?point spatial:PP ?region 
+}
+FROM &lt;http://gadm.geovocab.org/services/withinRegion&gt;
+WHERE {
+   ?point geo:lat ?lat .
+   ?point geo:long ?long .
+   ?point spatial:PP ?region 
+}    </lids:description>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="#boundingBox">
+    <lids:lids_description>
+      <rdf:Description>
+        <lids:endpoint rdf:resource="http://gadm.geovocab.org/services/boundingBox" />
+	<lids:service_entity>bbox</lids:service_entity>
+	<lids:input_bgp>?bbox &lt;http://geovocab.org/geometry#asWKT&gt; ?geom . ?bbox &lt;http://geovocab.org/spatial#PPi&gt; ?region</lids:input_bgp>
+	<lids:output_bgp>?bbox &lt;http://geovocab.org/geometry#asWKT&gt; ?geom . ?bbox &lt;http://geovocab.org/spatial#PPi&gt; ?region</lids:output_bgp>
+	<lids:required_vars>lat,long</lids:required_vars>
+      </rdf:Description>
+    </lids:lids_description>
+    <lids:description>
+PREFIX spatial: &lt;http://geovocab.org/spatial#&gt;
+PREFIX ngeo: &lt;http://geovocab.org/geometry#&gt;
+
+CONSTRUCT {
+   ?bbox ngeo:asWKT ?geom .
+   ?bbox spatial:PPi ?region
+}
+FROM &lt;http://gadm.geovocab.org/services/boundingBox&gt;
+WHERE {
+   ?bbox ngeo:asWKT ?geom .
+   ?bbox spatial:PPi ?region
+}    </lids:description>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="#search">
+    <lids:lids_description>
+      <rdf:Description>
+        <lids:endpoint rdf:resource="http://gadm.geovocab.org/services/search" />
+	<lids:service_entity>bbox</lids:service_entity>
+	<lids:input_bgp></lids:input_bgp>
+	<lids:output_bgp>?results &lt;http://www.w3.org/2000/01/rdf-schema#seeAlso&gt; ?gadm_uri</lids:output_bgp>
+	<lids:required_vars>lat,long</lids:required_vars>
+      </rdf:Description>
+    </lids:lids_description>
+    <lids:description>
+PREFIX spatial: &lt;http://geovocab.org/spatial#&gt;
+PREFIX ngeo: &lt;http://geovocab.org/geometry#&gt;
+
+CONSTRUCT {
+   ?results rdfs:seeAlso ?region 
+}
+FROM &lt;http://gadm.geovocab.org/services/boundingBox&gt;
+WHERE {
+   OPTIONAL {
+    ?region spatial:O ?buffer .
+    ?buffer rdf:type ngeo:Buffer .
+    ?buffer geo:lat ?lat .
+    ?buffer geo:long ?long 
+    OPTIONAL {
+      ?buffer ngeo:radius ?radius 
+    }
+   }
+   OPTIONAL {
+    ?region rdfs:label ?label 
+   }
+   OPTIONAL {
+    ?region rdf:type ?type 
+   }
+   OPTIONAL {
+    ?region spatial:PP ?containingRegion
+   }
+   OPTIONAL {
+    ?region spatial:PPi ?containedRegion
+   }
+   OPTIONAL {
+    ?region spatial:O ?overlappingRegion
+   }
+   OPTIONAL {
+    ?region spatial:EC ?externallyConnectedRegion
+   }
+   OPTIONAL {
+    ?region spatial:PO ?partiallyOverlappingRegion
+   }
+   OPTIONAL {
+    ?region spatial:PP ?bbox 
+   }
+}    </lids:description>
+  </rdf:Description>
+
+</rdf:RDF>
+
+
+
+

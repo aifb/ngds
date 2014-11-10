@@ -1,0 +1,326 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix : <http://gadm.geovocab.org/ontology#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://gadm.geovocab.org/ontology#> .
+
+<http://gadm.geovocab.org/ontology> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Datatypes
+#
+#################################################################
+
+
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://gadm.geovocab.org/ontology#member_of
+
+:member_of rdf:type owl:ObjectProperty .
+
+
+
+
+
+#################################################################
+#
+#    Data properties
+#
+#################################################################
+
+
+
+###  http://gadm.geovocab.org/ontology#andy_id
+
+:andy_id rdf:type owl:DatatypeProperty .
+
+
+###  http://gadm.geovocab.org/ontology#contains
+
+:contains rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#country_id
+
+:country_id rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#gadm_id
+
+:gadm_id rdf:type owl:DatatypeProperty ;
+         
+         rdfs:domain :AdministrativeRegion ;
+         
+         rdfs:range xsd:positiveInteger .
+
+
+
+###  http://gadm.geovocab.org/ontology#has_code
+
+:has_code rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#in_country
+
+:in_country rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#in_region
+
+:in_region rdf:type owl:DatatypeProperty .
+
+
+###  http://gadm.geovocab.org/ontology#iso
+
+:iso rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#iso2
+
+:iso2 rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#ison
+
+:ison rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#name
+
+:name rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#name_fao
+
+:name_fao rdf:type owl:DatatypeProperty .
+
+
+###  http://gadm.geovocab.org/ontology#name_iso
+
+:name_iso rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#name_obsolete
+
+:name_obsolete rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#name_variations
+
+:name_variations rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#pop2000
+
+:pop2000 rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#popsqkm
+
+:popsqkm rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#region_id
+
+:region_id rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#remarks
+
+:remarks rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#sovereign
+
+:sovereign rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#sqkm
+
+:sqkm rdf:type owl:DatatypeProperty .
+
+
+
+
+###  http://gadm.geovocab.org/ontology#type
+
+:type rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#type_english
+
+:type_english rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#unregion1
+
+:unregion1 rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#unregion2
+
+:unregion2 rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#valid_from
+
+:valid_from rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#valid_to
+
+:valid_to rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#waspartof
+
+:waspartof rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#wbdebt
+
+:wbdebt rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#wbincome
+
+:wbincome rdf:type owl:DatatypeProperty .
+
+
+
+###  http://gadm.geovocab.org/ontology#www
+
+:www rdf:type owl:DatatypeProperty .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://gadm.geovocab.org/ontology#AdministrativeRegion
+
+:AdministrativeRegion rdf:type owl:Class .
+
+
+
+###  http://gadm.geovocab.org/ontology#Country
+
+:Country rdf:type owl:Class ;
+         
+         rdfs:subClassOf :AdministrativeRegion .
+
+
+
+###  http://gadm.geovocab.org/ontology#Level1
+
+:Level1 rdf:type owl:Class ;
+         
+         rdfs:subClassOf :AdministrativeRegion .
+
+
+
+###  http://gadm.geovocab.org/ontology#Level2
+
+:Level2 rdf:type owl:Class ;
+         
+         rdfs:subClassOf :AdministrativeRegion .
+
+
+
+###  http://gadm.geovocab.org/ontology#Level3
+
+:Level3 rdf:type owl:Class ;
+         
+         rdfs:subClassOf :AdministrativeRegion .
+
+
+
+###  http://gadm.geovocab.org/ontology#Level4
+
+:Level4 rdf:type owl:Class ;
+         
+         rdfs:subClassOf :AdministrativeRegion .
+
+
+
+###  http://gadm.geovocab.org/ontology#IntergovernmentalAgreement
+
+:IntergovernmentalAgreement rdf:type owl:Class .
+
+
+
+###  http://gadm.geovocab.org/ontology#IslandCountry
+
+:IslandCountry rdf:type owl:Class ;
+               
+               rdfs:subClassOf :Country .
+
+
+
+###  http://gadm.geovocab.org/ontology#LandlockedCountry
+
+:LandlockedCountry rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Country .
+
+
+
+###  http://gadm.geovocab.org/ontology#LeastDevelopedCountry
+
+:LeastDevelopedCountry rdf:type owl:Class ;
+                       
+                       rdfs:subClassOf :Country .
+
+
+
+###  http://gadm.geovocab.org/ontology#TransitionEconomy
+
+:TransitionEconomy rdf:type owl:Class ;
+                   
+                   rdfs:subClassOf :Country .
+
+
+
+###  Generated by the OWL API (version 3.2.3.22702) http://owlapi.sourceforge.net
+

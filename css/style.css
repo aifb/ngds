@@ -1,0 +1,210 @@
+/* HTML Tags */
+body { 
+  font-size: 12px; 
+  line-height: 18px;
+  font-family: sans-serif; 
+  background-color: #f5f5f5;
+  color: #151515;
+}
+
+table { 
+  font-size: 14px; 
+  border-collapse: collapse;
+}
+th { 
+  text-align: left; 
+  padding-right: 20px; 
+  height: 25px;
+}
+th, td { 
+  vertical-align: top; 
+}
+
+input {
+  border: solid 1px #999;  
+}
+
+pre {
+  background: #ffc; 
+  margin-left: 0; 
+  padding: 1.4em 2em; 
+  overflow: auto; 
+}
+
+/* General Layout */
+
+.error {
+  background-color: #55c;
+}
+
+.warning {
+  font-style: italic;
+  color: #c00;
+}
+
+#container {
+  width: 960px;
+  margin: auto;
+  border: 1px solid #999;
+}
+
+#header {
+  background-image: url('../images/header2.png');
+  padding: 9px;
+  height: 65px;
+}
+
+#header h1 {
+  color: #fff;
+  font-size: 32px;
+  margin: 5px;
+  clear:both;
+  text-decoration: none;
+}
+
+#header h1 a {
+  color: #fff;
+  font-size: 32px;
+  margin: 0px;
+  text-decoration: none;
+}
+
+#menu {
+  float: left;
+  margin-top: 5px;
+}
+
+#menu ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
+#menu ul li {
+  padding-right: 10px;
+  padding-left: 10px;
+  border-right: 1px solid #fff;
+  float: left;
+}
+
+#menu ul .last {
+  border-right: none;
+}
+
+#menu a {
+  color: #fff;  
+  text-decoration: none;
+}
+
+#menu ul li ul {
+  background-color: #141414;
+  position: absolute;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+#menu ul li ul li {
+  background-color: #141414;
+  float: none;
+  padding: 5px;
+  min-width: 150px;
+  border-right: 0px;
+}
+
+#search {
+  margin-top: 10px;
+  color: #aaa;
+  float: right;
+}
+
+#search a {
+  text-decoration: none;
+}
+
+#search input {
+  height: 25px;  
+  float: left;
+  padding: 0px;
+}
+
+#search_button {
+  vertical-align: middle;
+  margin-left: 3px;
+  background-color: #efefef;
+  border: 1px solid #999;
+  color: #333;
+  float: right;
+  width: 50px;
+  padding: 3px;
+  text-align: center;
+}
+
+#content {
+  padding: 10px;
+  background-color: #fff;
+  min-height: 450px;
+}
+
+#footer {
+  width: 960px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Feature Description */
+#intro_block {
+  width: 550px;
+  float: left;
+  margin-bottom: 30px;
+}
+
+#google_maps {
+  float: right;
+}
+
+#description {
+  clear: left;
+}
+
+/* Google Maps Gadget customization */
+.gadget img {
+  display: none;
+}
+
+.gadget div {
+  position: relative;
+  top: -25px;
+}
+
+.gadget .title {
+  display: none;
+}
+
+.gadget .powered {
+  display: none;
+}
+
+/* Search Results */
+
+.results {
+  width: 90%;
+  margin: auto;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+}
+
+.results th, .results td {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.results th {
+  background-color: #9be;
+}
+
+.results .even {
+  background-color: #fff;
+}
+
+.results .odd {
+  background-color: #efefef;
+}

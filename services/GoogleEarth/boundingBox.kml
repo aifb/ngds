@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Folder>
+    <name>Network Links</name>
+    <visibility>1</visibility>
+    <open>0</open>
+    <description>GADM Network Links Example</description>
+    <NetworkLink>
+      <name>GADM-RDF</name>
+      <visibility>1</visibility>
+      <open>0</open>
+      <description>A service that returns all regions from the GADM-RDF dataset that are properly contained (spatial:PP) within the bounding box.</description>
+      <refreshVisibility>0</refreshVisibility>
+      <flyToView>0</flyToView>
+      <Link>
+        <href>http://gadm.geovocab.org/services/boundingBox?zoom_filter=1</href>
+        <refreshInterval>10000</refreshInterval>
+	<viewRefreshMode>onRequest</viewRefreshMode>
+      </Link>
+    </NetworkLink>
+  </Folder>
+</kml>

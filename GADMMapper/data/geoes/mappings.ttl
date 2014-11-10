@@ -1,0 +1,44 @@
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix : <http://gadm.geovocab.org/ontology#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://gadm.geovocab.org/ontology> .
+
+<http://gadm.geovocab.org/ontology> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://gadm.geovocab.org/ontology#Country
+
+:Country rdf:type owl:Class ;
+     
+	    owl:equivalentClass <http://geo.linkeddata.es/ontology/Pa%C3%ADs> .
+
+
+###  http://gadm.geovocab.org/ontology#Level1
+
+:Level1 rdf:type owl:Class ;
+     
+	    owl:equivalentClass <http://geo.linkeddata.es/ontology/ComunidadAut%C3%B3noma> .
+
+
+###  http://gadm.geovocab.org/ontology#Level2
+
+:Level2 rdf:type owl:Class ;
+     
+	    owl:equivalentClass <http://geo.linkeddata.es/ontology/Provincia> .
+
+
+###  http://gadm.geovocab.org/ontology#Level4
+
+:Level4 rdf:type owl:Class ;
+     
+	    owl:equivalentClass <http://geo.linkeddata.es/ontology/Municipio> .

@@ -1,0 +1,1 @@
+java -jar gadm_mapper.jar config/geoes.properties

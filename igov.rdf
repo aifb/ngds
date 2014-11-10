@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+   xmlns="http://gadm.geovocab.org/igov#">
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#AGP">
+    <rdfs:label>African, Caribbean and Pacific Group of States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/African,_Caribbean_and_Pacific_Group_of_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#AOSIS">
+    <rdfs:label>Alliance of Small Island States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Alliance_of_Small_Island_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#ASEAN">
+    <rdfs:label>ASEAN</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/ASEAN"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#AgadirAgreement">
+    <rdfs:label>Agadir Agreement</rdfs:label>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CACM">
+    <rdfs:label>Central American Integration System</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Central_American_Integration_System"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CAN">
+    <rdfs:label>Andean Community of Nations</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Andean_Community_of_Nations"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CARICOM">
+    <rdfs:label>Caribbean Community</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Caribbean_Community"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CEEAC">
+    <rdfs:label>Economic Community of Central African States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Economic_Community_of_Central_African_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CEMAC">
+    <rdfs:label>Economic &amp; Monetary Community of Central Africa</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Economic_Community_of_Central_African_States%23Economic_and_Monetary_Community_of_Central_Africa"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CEPLG">
+    <rdfs:label>Economic Community of the Great Lakes Countries</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Economic_Community_of_the_Great_Lakes_Countries"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CIS">
+    <rdfs:label>Commonwealth of Independent States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Commonwealth_of_Independent_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#COMESA">
+    <rdfs:label>Common Market for Eastern and Southern Africa</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Common_Market_for_Eastern_and_Southern_Africa"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#CSN">
+    <rdfs:label>Union of South American Nations</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Union_of_South_American_Nations"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#EAC">
+    <rdfs:label>East African Community</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/East_African_Community"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#ECOWAS">
+    <rdfs:label>Economic Community of West African States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Economic_Community_of_West_African_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#EU">
+    <rdfs:label>European Union</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/European_Union"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#EURASEC">
+    <rdfs:label>Eurasian Economic Community</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Eurasian_Economic_Community"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#GCC">
+    <rdfs:label>Cooperation Council for the Arab States of the Gulf</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Cooperation_Council_for_the_Arab_States_of_the_Gulf"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#IGAD">
+    <rdfs:label>Intergovernmental Authority on Development</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Intergovernmental_Authority_on_Development"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#IOC">
+    <rdfs:label>Indian Ocean Commission</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Indian_Ocean_Commission"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#MRU">
+    <rdfs:label>Mano River Union</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Mano_River_Union"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#NAFTA">
+    <rdfs:label>North American Free Trade Agreement</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/North_American_Free_Trade_Agreement"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#OECD">
+    <rdfs:label>Organisation for Economic Co-Operation and Development</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Organisation_for_Economic_Co-operation_and_Development"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#PALOP">
+    <rdfs:label>Portuguese-speaking African Countries</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Portuguese-speaking_African_countries"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#SAARC">
+    <rdfs:label>South Asian Association for Regional Cooperation</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/South_Asian_Association_for_Regional_Cooperation"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#SACU">
+    <rdfs:label>Southern African Customs Union</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Southern_African_Customs_Union"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#UEMOA">
+    <rdfs:label>Economic Community of West African States</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Economic_Community_of_West_African_States"/>
+  </IntergovernmentalAgreement>
+  <IntergovernmentalAgreement rdf:about="http://gadm.geovocab.org/igov#UMA">
+    <rdfs:label>Arab Maghreb Union</rdfs:label>
+    <owl:sameAs rdf:resource="http://dbpedia.org/resource/Arab_Maghreb_Union"/>
+  </IntergovernmentalAgreement>
+</rdf:RDF>

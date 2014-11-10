@@ -1,0 +1,2 @@
+java -Xmx512m -Djava.net.preferIPv4Stack=true -jar gadm_updater.jar 
+http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=560044
