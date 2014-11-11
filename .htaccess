@@ -1,0 +1,870 @@
+# Turn off MultiViews
+Options +FollowSymLinks -MultiViews
+
+# Rewrite engine setup
+RewriteEngine On
+RewriteBase /
+
+# Directive to ensure files are served with the appropriate content type,
+# if not present in main Apache config.
+AddType application/rdf+xml .rdf
+AddType text/turtle .ttl
+AddType application/vnd.ogc.gml .gml
+AddType application/vnd.google-earth.kml+xml .kml
+AddType application/json .geojson
+
+# Redirect from HTML home to PHP
+RewriteRule ^index.html$ index.php [L,R=301]
+
+######################
+# RULES FOR ONTOLOGY
+######################
+
+# Rewrite rule to serve HTML content from the vocabulary URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/html [OR]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^ontology(.*)$ ontology.html$1 [L,R=303]
+
+# Rewrite rule to redirect the ontology URI to a RDF definition
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ontology(.*)$ ontology.rdf [L,QSA]
+
+######################
+# RULES FOR IGOV AGREEMENTS
+######################
+
+# Rewrite rule to serve HTML content from the vocabulary URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/html [OR]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^igov(.*)$ igov.html$1 [L,R=303]
+
+# Rewrite rule to redirect the agreement's URI to a RDF definition
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^igov(.*)$ igov.rdf [L,QSA]
+
+######################
+# RULES FOR SEARCH
+######################
+
+# Rewrite rule to serve RDF/XML content from the search URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^search?(.*)$ search.php?content_type=rdf&$1 [L,QSA]
+
+# Rewrite rule to remove PHP extension from the search URI
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^search(.*)$ search.php$1 [L,QSA]
+
+######################
+# RULES FOR Neogeo
+######################
+
+
+# Rewrite rule to serve RDF/XML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=rdf&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+).rdf(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=rdf&$3 [L,QSA]
+
+# Rewrite rule to serve Turtle content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=ttl&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=ttl&$3 [L,QSA]
+
+# Rewrite rule to serve KML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kml\+xml
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kml&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+).kml(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kml&$3 [L,QSA]
+
+# Rewrite rule to serve KMZ content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kmz
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kmz&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+).kmz(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kmz&$3 [L,QSA]
+
+# Rewrite rule to serve GML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.ogc\.gml
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=gml&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+).gml(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=gml&$3 [L,QSA]
+
+# Rewrite rule to serve SVG content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} image/svg\+xml
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$&1content_type=svg&$3 [L,QSA]
+
+
+# Rewrite rule to serve GeoJSON content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/json
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=geojson&$3 [L,QSA]
+
+# Rewrite rule to remove PHP extension from the services' URI
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=rdf&$3 [L,QSA]
+
+###################
+# RULES FOR BBOX (deprecated)
+###################
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^services/boundingBox(?!\.php)(\?(.*))?$ neogeo/O$2 [L,R=301]
+
+######################
+# RULES FOR SERVICES
+######################
+
+
+# Rewrite rule to serve RDF/XML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=rdf&$3 [L,QSA]
+
+
+# Rewrite rule to serve Turtle content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=ttl&$3 [L,QSA]
+
+
+# Rewrite rule to serve KML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kml\+xml
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=kml&$3 [L,QSA]
+
+
+# Rewrite rule to serve KMZ content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kmz
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=kmz&$3 [L,QSA]
+
+
+# Rewrite rule to serve GML content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.ogc\.gml
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=gml&$3 [L,QSA]
+
+
+# Rewrite rule to serve SVG content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} image/svg\+xml
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=svg&$3 [L,QSA]
+
+
+# Rewrite rule to serve GeoJSON content from the services' URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/json
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=geojson&$3 [L,QSA]
+
+
+# Rewrite rule to remove PHP extension from the services' URI
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^services/(\w+)(?!\.php)(\?(.*))?$ services/$1.php?content_type=rdf&$3 [L,QSA]
+
+###################
+# RULES FOR SUB
+###################
+
+# HTML
+# Let the service provide the HTML content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-3])/(\d+)/sub.html$ sub.php?level=$1&id=$2&feature=1&resolution=1&geometry=0&content_type=html [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^id/([0-3])/(\d+)/sub$ id/$1/$2/sub.html [L,R=303]
+
+#rdf
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-3])/(\d+)/sub.rdf$ sub.php?level=$1&id=$2&feature=1&resolution=1&geometry=1&content_type=rdf [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^id/([0-3])/(\d+)/sub$ id/$1/$2/sub.rdf [L,R=303]
+
+#ttl
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-3])/(\d+)/sub.ttl$ sub.php?level=$1&id=$2&feature=1&resolution=1&geometry=1&content_type=ttl [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^id/([0-3])/(\d+)/sub$ id/$1/$2/sub.ttl [L,R=303]
+
+#kml
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-3])/(\d+)/sub.kml$ sub.php?level=$1&id=$2&geometry=1&resolution=1&geometry=1&content_type=kml [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kml\+xml
+RewriteRule ^id/([0-3])/(\d+)/sub$ id/$1/$2/sub.kml [L,R=303]
+
+###################
+# RULES FOR REGIONS
+###################
+
+# HTML
+
+# Let the service provide the HTML content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.html$ region.php?level=$1&id=$2&geometry=1&content_type=html&resolution=0.1 [L,QSA]
+
+# Let the service provide the HTML content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.html$ region.php?level=$1&id=$2&geometry=1&content_type=html&resolution=1 [L,QSA]
+
+# Let the service provide the HTML content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.html$ region.php?level=$1&id=$2&geometry=1&content_type=html&resolution=10 [L,QSA]
+
+# Let the service provide the HTML content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.html$ region.php?level=$1&id=$2&geometry=1&content_type=html&resolution=100 [L,QSA]
+
+# Let the service provide the HTML content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.html$ region.php?level=$1&id=$2&geometry=1&content_type=html [L,QSA]
+
+# Let the service provide the HTML content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+).html$ region.php?level=$1&id=$2&feature=1&content_type=html [L,QSA]
+
+# Rewrite rule to serve HTML content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/html [OR]
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3$4.html [L,R=303]
+
+# RDF/XML
+
+# Let the service provide the RDF/XML content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.rdf region.php?level=$1&id=$2&geometry=1&content_type=rdf&resolution=0.1 [L,QSA]
+
+# Let the service provide the RDF/XML content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.rdf region.php?level=$1&id=$2&geometry=1&content_type=rdf&resolution=1 [L,QSA]
+
+# Let the service provide the RDF/XML content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.rdf region.php?level=$1&id=$2&geometry=1&content_type=rdf&resolution=10 [L,QSA]
+
+# Let the service provide the RDF/XML content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.rdf region.php?level=$1&id=$2&geometry=1&content_type=rdf&resolution=100 [L,QSA]
+
+# Let the service provide the RDF/XML content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.rdf$ region.php?level=$1&id=$2&geometry=1&content_type=rdf [L,QSA]
+
+# Let the service provide the RDF/XML content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+).rdf$ region.php?level=$1&id=$2&feature=1&content_type=rdf [L,QSA]
+
+# Rewrite rule to serve RDF/XML content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.rdf [L,R=303]
+
+# Turtle
+
+# Let the service provide the Turtle content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.ttl region.php?level=$1&id=$2&geometry=1&content_type=ttl&resolution=0.1 [L,QSA]
+
+# Let the service provide the Turtle content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.ttl region.php?level=$1&id=$2&geometry=1&content_type=ttl&resolution=1 [L,QSA]
+
+# Let the service provide the Turtle content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.ttl region.php?level=$1&id=$2&geometry=1&content_type=ttl&resolution=10 [L,QSA]
+
+# Let the service provide the Turtle content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.ttl region.php?level=$1&id=$2&geometry=1&content_type=ttl&resolution=100 [L,QSA]
+
+# Let the service provide the Turtle content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.ttl region.php?level=$1&id=$2&geometry=1&content_type=ttl [L,QSA]
+
+# Let the service provide the Turtle content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+).ttl region.php?level=$1&id=$2&feature=1&content_type=ttl [L,QSA]
+
+# Rewrite rule to serve Turtle content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.ttl [L,R=303]
+
+# GML
+
+# Let the service provide the GML content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.gml region.php?level=$1&id=$2&geometry=1&content_type=gml&resolution=0.1 [L,QSA]
+
+# Let the service provide the GML content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.gml region.php?level=$1&id=$2&geometry=1&content_type=gml&resolution=1 [L,QSA]
+
+# Let the service provide the GML content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.gml region.php?level=$1&id=$2&geometry=1&content_type=gml&resolution=10 [L,QSA]
+
+# Let the service provide the GML content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.gml region.php?level=$1&id=$2&geometry=1&content_type=gml&resolution=100 [L,QSA]
+
+# Let the service provide the GML content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.gml region.php?level=$1&id=$2&geometry=1&content_type=gml [L,QSA]
+
+# Rewrite rule to serve GML content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.ogc\.gml
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.gml [L,R=303]
+
+# SVG
+
+# Let the service provide the SVG content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.svg region.php?level=$1&id=$2&geometry=1&content_type=svg&resolution=0.1 [L,QSA]
+
+# Let the service provide the SVG content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.svg region.php?level=$1&id=$2&geometry=1&content_type=svg&resolution=1 [L,QSA]
+
+# Let the service provide the SVG content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.svg region.php?level=$1&id=$2&geometry=1&content_type=svg&resolution=10 [L,QSA]
+
+# Let the service provide the SVG content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.svg region.php?level=$1&id=$2&geometry=1&content_type=svg&resolution=100 [L,QSA]
+
+# Let the service provide the SVG content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.svg region.php?level=$1&id=$2&geometry=1&content_type=svg [L,QSA]
+
+# Rewrite rule to serve SVG content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} image/svg\+xml
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.svg [L,R=303]
+
+# KML
+
+# Let the service provide the KML content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.kml region.php?level=$1&id=$2&geometry=1&content_type=kml&resolution=0.1 [L,QSA]
+
+# Let the service provide the KML content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.kml region.php?level=$1&id=$2&geometry=1&content_type=kml&resolution=1 [L,QSA]
+
+# Let the service provide the KML content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.kml region.php?level=$1&id=$2&geometry=1&content_type=kml&resolution=10 [L,QSA]
+
+# Let the service provide the KML content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.kml region.php?level=$1&id=$2&geometry=1&content_type=kml&resolution=100 [L,QSA]
+
+# Return a simplified version of the geometry with a reduced number of coordinates so that its size is lower than the Google Maps limit.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/simplified_geometry.kml region.php?level=$1&id=$2&geometry=1&simplify=1&content_type=kml [L,QSA]
+
+# Let the service provide the KML content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.kml region.php?level=$1&id=$2&geometry=1&content_type=kml [L,QSA]
+
+# Rewrite rule to serve KML content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kml\+xml
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.kml [L,R=303]
+
+# KMZ
+
+# Let the service provide the KMZ content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.kmz region.php?level=$1&id=$2&geometry=1&content_type=kmz&resolution=0.1 [L,QSA]
+
+# Let the service provide the KMZ content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.kmz region.php?level=$1&id=$2&geometry=1&content_type=kmz&resolution=1 [L,QSA]
+
+# Let the service provide the KMZ content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.kmz region.php?level=$1&id=$2&geometry=1&content_type=kmz&resolution=10 [L,QSA]
+
+# Let the service provide the KMZ content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.kmz region.php?level=$1&id=$2&geometry=1&content_type=kmz&resolution=100 [L,QSA]
+
+# Return a simplified version of the geometry with a reduced number of coordinates so that its size is lower than the Google Maps limit.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/simplified_geometry.kmz region.php?level=$1&id=$2&geometry=1&simplify=1&content_type=kmz [L,QSA]
+
+# Let the service provide the KMZ content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.kmz region.php?level=$1&id=$2&geometry=1&content_type=kmz [L,QSA]
+
+# Rewrite rule to serve KMZ content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kmz
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.kmz [L,R=303]
+
+# GeoJSON
+
+# Let the service provide the GeoJSON content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100m.geojson region.php?level=$1&id=$2&geometry=1&content_type=geojson&resolution=0.1 [L,QSA]
+
+# Let the service provide the GeoJSON content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_1km.geojson region.php?level=$1&id=$2&geometry=1&content_type=geojson&resolution=1 [L,QSA]
+
+# Let the service provide the GeoJSON content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_10km.geojson region.php?level=$1&id=$2&geometry=1&content_type=geojson&resolution=10 [L,QSA]
+
+# Let the service provide the GeoJSON content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry_100km.geojson region.php?level=$1&id=$2&geometry=1&content_type=geojson&resolution=100 [L,QSA]
+
+# Let the service provide the GeoJSON content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)/geometry.geojson region.php?level=$1&id=$2&geometry=1&content_type=geojson [L,QSA]
+
+# Rewrite rule to serve GeoJSON content from the URI if requested
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/json
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.geojson [L,R=303]
+
+
+# DEFAULT (HTML)
+
+# Rewrite rule to serve HTML content if the Accept Header is not set or does not match a condition
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])/(\d+)(/geometry)?(_\w+)?$ id/$1/$2$3.html [L,R=303]
+
+###################
+# RULES FOR LEVELS
+###################
+
+# HTML
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond expr "!%{QUERY_STRING} -strmatch '*limit*'"
+RewriteRule ^id/([0-4]).html$ id/$1.html?limit=0,20 [L,R=303]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond expr "%{QUERY_STRING} -strmatch '*limit*'"
+RewriteRule ^id\/([0-4])\.html level.php?level=$1&feature=1&content_type=html [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/xhtml\+xml
+RewriteRule ^id/([0-4])$ id/$1.html [L,R=303]
+
+#rdf
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4]).rdf?(.*)$ level.php?level=$1&feature=1&content_type=rdf&$2 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4]).rdf$ id/$1.rdf?limit=0,20 [L,R=303]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/rdf\+xml
+RewriteRule ^id/([0-4])$ id/$1.rdf [L,R=303]
+
+#ttl
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4]).ttl$ level.php?level=$1&feature=1&content_type=rdf [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} text/turtle
+RewriteRule ^id/([0-4])$ id/$1.rdf [L,R=303]
+
+#kml
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4]).kml$ level.php?level=$1&id=$2&geometry=1&geometry=1&resolution=100&content_type=kml [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/vnd\.google\-earth\.kml\+xml
+RewriteRule ^id/([0-4])$ id/$1.kml [L,R=303]
+
+###############################################################################################################################
+#Compatibility mode (started on 31st of Juli 2013)
+###############################################################################################################################
+
+###################
+# RULES FOR REGIONS
+###################
+
+#basic rules
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry?(_\w+)?$ id/$1/$2/geometry [L,R=301]
+
+#basic rules
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)(_geometry)?(_\w+)?$ id/$1/$2 [L,R=301]
+
+# HTML
+
+# Let the service provide the HTML content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.html$ id/$1/$2/geometry_100m.html [L,R=301]
+
+# Let the service provide the HTML content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.html$ id/$1/$2/geometry_1km.html [L,R=301]
+
+# Let the service provide the HTML content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.html$ id/$1/$2/geometry_10km.html [L,R=301]
+
+# Let the service provide the HTML content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.html$ id/$1/$2/geometry_100km.html [L,R=301]
+
+# Let the service provide the HTML content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.html$ id/$1/$2/geometry.html [L,R=301]
+
+# Let the service provide the HTML content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+).html$ id/$1/$2.html [L,R=301]
+
+# RDF/XML
+
+# Let the service provide the rdf content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.rdf$ id/$1/$2/geometry_100m.rdf [L,R=301]
+
+# Let the service provide the rdf content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.rdf$ id/$1/$2/geometry_1km.rdf [L,R=301]
+
+# Let the service provide the rdf content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.rdf$ id/$1/$2/geometry_10km.rdf [L,R=301]
+
+# Let the service provide the rdf content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.rdf$ id/$1/$2/geometry_100km.rdf [L,R=301]
+
+# Let the service provide the rdf content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.rdf$ id/$1/$2/geometry.rdf [L,R=301]
+
+# Let the service provide the rdf content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+).rdf$ id/$1/$2.rdf [L,R=301]
+
+# Turtle
+
+# Let the service provide the ttf content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.ttf$ id/$1/$2/geometry_100m.ttf [L,R=301]
+
+# Let the service provide the ttf content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.ttf$ id/$1/$2/geometry_1km.ttf [L,R=301]
+
+# Let the service provide the ttf content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.ttf$ id/$1/$2/geometry_10km.ttf [L,R=301]
+
+# Let the service provide the ttf content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.ttf$ id/$1/$2/geometry_100km.ttf [L,R=301]
+
+# Let the service provide the ttf content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.ttf$ id/$1/$2/geometry.ttf [L,R=301]
+
+# Let the service provide the ttf content for the feature
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+).ttf$ id/$1/$2.ttf [L,R=301]
+
+# GML
+
+# Let the service provide the gml content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.gml$ id/$1/$2/geometry_100m.gml [L,R=301]
+
+# Let the service provide the gml content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.gml$ id/$1/$2/geometry_1km.gml [L,R=301]
+
+# Let the service provide the gml content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.gml$ id/$1/$2/geometry_10km.gml [L,R=301]
+
+# Let the service provide the gml content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.gml$ id/$1/$2/geometry_100km.gml [L,R=301]
+
+# Let the service provide the gml content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.gml$ id/$1/$2/geometry.gml [L,R=301]
+
+# SVG
+
+# Let the service provide the svg content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.svg$ id/$1/$2/geometry_100m.svg [L,R=301]
+
+# Let the service provide the svg content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.svg$ id/$1/$2/geometry_1km.svg [L,R=301]
+
+# Let the service provide the svg content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.svg$ id/$1/$2/geometry_10km.svg [L,R=301]
+
+# Let the service provide the svg content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.svg$ id/$1/$2/geometry_100km.svg [L,R=301]
+
+# Let the service provide the svg content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.svg$ id/$1/$2/geometry.svg [L,R=301]
+
+# KML
+
+# Let the service provide the kml content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.kml$ id/$1/$2/geometry_100m.kml [L,R=301]
+
+# Let the service provide the kml content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.kml$ id/$1/$2/geometry_1km.kml [L,R=301]
+
+# Let the service provide the kml content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.kml$ id/$1/$2/geometry_10km.kml [L,R=301]
+
+# Let the service provide the kml content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.kml$ id/$1/$2/geometry_100km.kml [L,R=301]
+
+# Let the service provide the kml content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.kml$ id/$1/$2/geometry.kml [L,R=301]
+
+# KMZ
+
+# Let the service provide the kmz content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.kmz$ id/$1/$2/geometry_100m.kmz [L,R=301]
+
+# Let the service provide the kmz content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.kmz$ id/$1/$2/geometry_1km.kmz [L,R=301]
+
+# Let the service provide the kmz content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.kmz$ id/$1/$2/geometry_10km.kmz [L,R=301]
+
+# Let the service provide the kmz content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.kmz$ id/$1/$2/geometry_100km.kmz [L,R=301]
+
+# Let the service provide the kmz content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.kmz$ id/$1/$2/geometry.kmz [L,R=301]
+
+# GeoJSON
+
+# Let the service provide the geojson content for the geometry, resolution 100m
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100m.geojson$ id/$1/$2/geometry_100m.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry, resolution 1km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_1km.geojson$ id/$1/$2/geometry_1km.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.geojson$ id/$1/$2/geometry_10km.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.geojson$ id/$1/$2/geometry_100km.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.geojson$ id/$1/$2/geometry.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry, resolution 10km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_10km.geojson$ id/$1/$2/geometry_10km.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry, resolution 100km
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry_100km.geojson$ id/$1/$2/geometry_100km.geojson [L,R=301]
+
+# Let the service provide the geojson content for the geometry
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^id/([0-4])_(\d+)_geometry.geojson$ id/$1/$2/geometry.geojson [L,R=301]
