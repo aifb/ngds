@@ -107,7 +107,7 @@ RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&con
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^neogeo/(\w+).kmz(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kmz&$3 [L,QSA]
+RewriteRule ^neogeo/(\w+).kmz(\?(.*))?$ services/neogeo.php?relation=$1&content_type=kmz&$3 [L,QSA]
 
 # Rewrite rule to serve GML content from the services' URI if requested
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -117,7 +117,7 @@ RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&con
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^neogeo/(\w+).gml(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=gml&$3 [L,QSA]
+RewriteRule ^neogeo/(\w+).gml(\?(.*))?$ services/neogeo.php?relation=$1&content_type=gml&$3 [L,QSA]
 
 # Rewrite rule to serve SVG content from the services' URI if requested
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -125,12 +125,20 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{HTTP_ACCEPT} image/svg\+xml
 RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$&1content_type=svg&$3 [L,QSA]
 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^neogeo/(\w+).svg(\?(.*))?$ services/neogeo.php?relation=$&1content_type=svg&$3 [L,QSA]
 
 # Rewrite rule to serve GeoJSON content from the services' URI if requested
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{HTTP_ACCEPT} application/json
 RewriteRule ^neogeo/(\w+)(?!\.php)(\?(.*))?$ services/neogeo.php?relation=$1&content_type=geojson&$3 [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{HTTP_ACCEPT} application/json
+RewriteRule ^neogeo/(\w+).json(\?(.*))?$ services/neogeo.php?relation=$1&content_type=geojson&$3 [L,QSA]
 
 # Rewrite rule to remove PHP extension from the services' URI
 RewriteCond %{REQUEST_FILENAME} !-f
